@@ -67,6 +67,6 @@ describe('AuthController', () => {
     const user = await controller.me({
       user: UsersResultMocks.adminUser
     });
-    expect(user).toMatchObject({ data: { user: UsersResultMocks.adminUser } });
+    expect(user).toMatchObject({ data: UsersResultMocks.adminUser });
   });
 });
