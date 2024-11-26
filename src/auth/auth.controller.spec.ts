@@ -1,9 +1,12 @@
-import { describe, beforeEach, expect } from 'vitest'
+import { describe, beforeEach, expect } from 'vitest';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthController } from './auth.controller';
 import { AuthModule } from './auth.module';
 import { ConfigModule } from '@nestjs/config';
-import { PrismaMockModule, PrismaServiceMock } from 'test/mocks/prisma/prisma.module.mock';
+import {
+  PrismaMockModule,
+  PrismaServiceMock,
+} from 'test/mocks/prisma/prisma.module.mock';
 import { PrismaService } from 'nestjs-prisma';
 import { UsersResultMocks } from 'test/mocks/prisma/result/users.result.mock';
 import { UnauthorizedException } from '@nestjs/common';
@@ -18,7 +21,7 @@ describe('AuthController', () => {
         ConfigModule.forRoot({
           isGlobal: true,
         }),
-        AuthModule
+        AuthModule,
       ],
     }).compile();
     prismaServiceMock = module.get<typeof PrismaServiceMock>(PrismaService);
@@ -30,7 +33,9 @@ describe('AuthController', () => {
   });
 
   it('should return a token', async () => {
-    prismaServiceMock.user.findFirst.mockResolvedValue(UsersResultMocks.adminUser);
+    prismaServiceMock.user.findFirst.mockResolvedValue(
+      UsersResultMocks.adminUser,
+    );
     const token = await controller.login({
       key: 'admin@admin.com',
       password: 'admin',
@@ -39,7 +44,9 @@ describe('AuthController', () => {
   });
 
   it('should return a token with remember me', async () => {
-    prismaServiceMock.user.findFirst.mockResolvedValue(UsersResultMocks.adminUser);
+    prismaServiceMock.user.findFirst.mockResolvedValue(
+      UsersResultMocks.adminUser,
+    );
     const token = await controller.login({
       key: 'admin@admin.com',
       password: 'admin',
@@ -63,9 +70,11 @@ describe('AuthController', () => {
   });
 
   it('should return an user', async () => {
-    prismaServiceMock.user.findFirst.mockResolvedValue(UsersResultMocks.adminUser);
+    prismaServiceMock.user.findFirst.mockResolvedValue(
+      UsersResultMocks.adminUser,
+    );
     const user = await controller.me({
-      user: UsersResultMocks.adminUser
+      user: UsersResultMocks.adminUser,
     });
     expect(user).toMatchObject({ data: UsersResultMocks.adminUser });
   });

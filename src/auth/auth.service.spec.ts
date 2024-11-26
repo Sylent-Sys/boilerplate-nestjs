@@ -2,7 +2,10 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { AuthModule } from './auth.module';
 import { ConfigModule } from '@nestjs/config';
-import { PrismaMockModule, PrismaServiceMock } from 'test/mocks/prisma/prisma.module.mock';
+import {
+  PrismaMockModule,
+  PrismaServiceMock,
+} from 'test/mocks/prisma/prisma.module.mock';
 import { UsersResultMocks } from 'test/mocks/prisma/result/users.result.mock';
 import { PrismaService } from 'nestjs-prisma';
 import { UnauthorizedException } from '@nestjs/common';
@@ -17,7 +20,7 @@ describe('AuthService', () => {
         ConfigModule.forRoot({
           isGlobal: true,
         }),
-        AuthModule
+        AuthModule,
       ],
     }).compile();
     prismaServiceMock = module.get<typeof PrismaServiceMock>(PrismaService);
@@ -29,7 +32,9 @@ describe('AuthService', () => {
   });
 
   it('should return a token', async () => {
-    prismaServiceMock.user.findFirst.mockResolvedValue(UsersResultMocks.adminUser);
+    prismaServiceMock.user.findFirst.mockResolvedValue(
+      UsersResultMocks.adminUser,
+    );
     const token = await service.login({
       key: 'admin@admin.com',
       password: 'admin',
@@ -38,7 +43,9 @@ describe('AuthService', () => {
   });
 
   it('should return a user', async () => {
-    prismaServiceMock.user.findFirst.mockResolvedValue(UsersResultMocks.adminUser);
+    prismaServiceMock.user.findFirst.mockResolvedValue(
+      UsersResultMocks.adminUser,
+    );
     const user = await service.validateUser('admin@admin.com');
     expect(user).toEqual(expect.objectContaining({ id: expect.any(String) }));
   });

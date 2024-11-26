@@ -5,13 +5,9 @@ import { PrismaMockModule } from 'test/mocks/prisma/prisma.module.mock';
 
 describe('UsersService', () => {
   let service: UsersService;
-  let mockPrismaService: any;
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [
-        PrismaMockModule,
-        UsersModule
-      ],
+      imports: [PrismaMockModule, UsersModule],
     }).compile();
     service = module.get<UsersService>(UsersService);
   });
